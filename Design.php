@@ -2,6 +2,9 @@
 
 namespace Printies;
 
+require_once( 'tcpdf/tcpdf.php' );
+require_once( 'fpdi/fpdi.php' );
+
 abstract class Design {
 
 	/**
@@ -24,9 +27,10 @@ abstract class Design {
 		return $price;
 	}
 
-	public function form() {
+	public function form($data) {
 		$form_builder = new FormBuilder();
-		return $form_builder->form($this);
+		$fields = $form_builder->form($this, $data);
+		return implode("\n", $fields);
 	}
 
 	protected abstract function decoratePdf($data);
@@ -39,9 +43,10 @@ abstract class Design {
 
 	}
 
-	public function generate($data) {
+	public function generate($filename, $data) {
 		$this->initPage();
 		$this->decoratePdf($data);
+		$this->pdf->Output($filename, 'F');
 	}
 
 	protected function initPage() {

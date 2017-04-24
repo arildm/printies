@@ -12,26 +12,27 @@ class FormBuilder {
 	 * @param array $form_data
 	 *   (optional) Any already-submitted form data.
 	 *
-	 * @return string
+	 * @return string[]
 	 *   The form.
 	 */
 	public function form($design, $form_data = array()) {
-		$output = '';
+		$fields = '';
 		foreach ($design->fields() as $field) {
 			$field_input = (!empty($form_data[$field->name]) ? $form_data[$field->name] : '');
-			$output .= '<p>' . $field->label . ': ';
+			$output = '<p>' . $field->label . ': ';
 			switch ($field->type) {
 				case 'text':
-					$output .= sprintf('<input name="%s" value="%s">', $field->name, $field_input);
+					$output .= sprintf('<input name="%s" required="%s" value="%s">', $field->name, $field->required ? 'required' : '', $field_input);
 					break;
 				case 'integer':
 					$attributes = 'min="' . $field->getAttribute('min') . '" max="' . $field->getAttribute('max') . '"';
-					$output .= sprintf('<input type="number" name="%s" value="%s" %s">', $field->name, $field_input, $attributes);
+					$output .= sprintf('<input type="number" name="%s" required="%s" value="%s" %s>', $field->name, $field->required ? 'required' : '', $field_input, $attributes);
 					break;
 			}
 			$output .= '</p>';
+			$fields[$field->name] = $output;
 		}
-		return $output;
+		return $fields;
 	}
 
 }

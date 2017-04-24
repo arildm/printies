@@ -20,14 +20,15 @@ class Field {
 
 	protected $attributes = array();
 
-	public function __construct($name, $label, $type) {
+	public function __construct($name, $label, $type, $required = TRUE) {
 		$this->name = $name;
 		$this->label = $label;
 		$this->type = $type;
+		$this->required = $required;
 	}
 
-	public static function create($name, $label, $type) {
-		$field = new static($name, $label, $type);
+	public static function create($name, $label, $type, $required = TRUE) {
+		$field = new static($name, $label, $type, $required);
 		return $field;
 	}
 
