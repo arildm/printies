@@ -18,6 +18,9 @@ class FormBuilder {
 	public function form($design, $form_data = array()) {
 		$fields = '';
 		foreach ($design->fields() as $field) {
+			if ($design->getQuantityFieldName() == $field->name) {
+				continue;
+			}
 			$field_input = (!empty($form_data[$field->name]) ? $form_data[$field->name] : '');
 			$output = '<p>' . $field->label . ': ';
 			switch ($field->type) {

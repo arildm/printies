@@ -23,8 +23,8 @@ abstract class Design {
 
 	public abstract function getLabel($data = array());
 
-	public function alterPrice($price, $data) {
-		return $price;
+	public function getQuantityFieldName() {
+		return NULL;
 	}
 
 	public function form($data) {
