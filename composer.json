@@ -1,3 +1,8 @@
 {
-    "name": "drupal/printies"
+    "name": "drupal/printies",
+    "autoload": {
+        "psr-4": {
+            "Drupal\\printies\\": "src/"
+        }
+    }
 }
