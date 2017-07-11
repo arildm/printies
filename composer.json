@@ -1,3 +1,6 @@
 {
-    "name": "arildm/printies"
+    "name": "arildm/printies",
+    "autoload": {
+        "psr-4": {"Arildm\\Printies\\": "src/"}
+    }
 }

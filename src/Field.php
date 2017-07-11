@@ -6,7 +6,7 @@
  * Time: 16:16
  */
 
-namespace Printies;
+namespace Arildm\Printies;
 
 class Field {
 

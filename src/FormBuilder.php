@@ -1,6 +1,6 @@
 <?php
 
-namespace Printies;
+namespace Arildm\Printies;
 
 class FormBuilder {
 

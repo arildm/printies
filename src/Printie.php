@@ -1,11 +1,14 @@
 <?php
 
-namespace Printies;
+namespace Arildm\Printies;
+
+require_once( __DIR__ . '/../tcpdf/tcpdf.php' );
+require_once( __DIR__ . '/../fpdi/fpdi.php' );
 
 class Printie {
 
 	/**
-	 * @var \Printies\Design
+	 * @var \Arildm\Printies\Design
 	 */
 	protected $design;
 

@@ -1,9 +1,6 @@
 <?php
 
-namespace Printies;
-
-require_once( 'tcpdf/tcpdf.php' );
-require_once( 'fpdi/fpdi.php' );
+namespace Arildm\Printies;
 
 abstract class Design {
 
@@ -29,8 +26,6 @@ abstract class Design {
 	/**
 	 * @param \FPDI $pdf
 	 * @param array $data
-	 *
-	 * @return mixed
 	 */
 	public abstract function decoratePdf($pdf, $data);
 
