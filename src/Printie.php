@@ -65,18 +65,45 @@ class Printie {
 	}
 
 	protected function watermark($watermark_text) {
+		$this->pdf->setPage(1);
 		$this->pdf->SetTextColor( 150, 150, 150 );
-		$this->pdf->SetFont( 'gotham-medium', '', 14 );
-		$coor = array(
-			array(30,  40), array(130,  40),
-			array(30, 100), array(130, 100),
-			array(30, 180), array(130, 180),
-			array(30, 260), array(130, 260)
-		);
-		foreach( $coor as $pos ) {
-			$this->pdf->SetXY( $pos[0], $pos[1] );
-			$this->pdf->Write( 0, $watermark_text );
+		$this->pdf->SetFont( 'helvetica', '', 24 );
+
+		list($dist, $coordinates) = $this->spreadCoordinates(60);
+		foreach ($coordinates as $coordinate) {
+			$this->pdf->SetXY( $coordinate[0], $coordinate[1] );
+			$this->pdf->Cell( $dist[0], $dist[1] - 30, $watermark_text, 0, 0, 'C' );
 		}
+	}
+
+	public function spreadCoordinates($distance) {
+		// $format = [w, h]
+		$format = $this->design->getFormat();
+		if (!is_array($format)) {
+			$format = \TCPDF_STATIC::getPageSizeFromFormat($this->design->getFormat());
+			// Points to mm.
+			$format[0] *= 2.834;
+			$format[1] *= 2.834;
+		}
+		if ($this->design->getOrientation() == 'L') {
+			$format = array_reverse($format);
+		}
+
+		$count = $dist = array();
+		foreach (range(0, 1) as $dim) {
+			// How many watermarks can we fit?
+			$count[$dim] = intval($format[$dim] / $distance) - 1;
+			// How far apart should they be?
+			$dist[$dim] = $format[$dim] / $count[$dim];
+		}
+
+		$coordinates = array();
+		foreach (range(0, $count[0] - 1) as $x) {
+			foreach (range(0, $count[1] - 1) as $y) {
+				$coordinates[] = array($x * $dist[0], $y * $dist[1]);
+			}
+		}
+		return array($dist, $coordinates);
 	}
 
 }
