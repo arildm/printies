@@ -23,6 +23,18 @@ abstract class Design {
 		return implode("\n", $fields);
 	}
 
+	public function getOrientation() {
+		return 'P';
+	}
+
+	public function getUnit() {
+		return 'mm';
+	}
+
+	public function getFormat() {
+		return 'A4';
+	}
+
 	/**
 	 * @param \FPDI $pdf
 	 * @param array $data

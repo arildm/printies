@@ -44,11 +44,13 @@ class Printie {
 	}
 
 	protected function initPage() {
-		$this->pdf = new \FPDI();
+		$orientation = $this->design->getOrientation();
+		$this->pdf = new \FPDI($orientation, $this->design->getUnit(), $this->design->getFormat());
+
 		$this->pdf->SetPrintHeader(false);
 		$this->pdf->SetPrintFooter(false);
 		$this->pdf->setFontSubsetting(false);
-		$this->pdf->AddPage('P');
+		$this->pdf->AddPage($orientation);
 		// Import template
 		$tpl_file = $this->getPdfPath();
 		$num_pages = $this->pdf->setSourceFile($tpl_file);
