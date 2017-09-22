@@ -29,11 +29,11 @@ class Printie {
 		$this->data = $data;
 	}
 
-	public function preview($watermark_text = 'PREVIEW') {
+	public function preview($name = NULL, $dest = 'I', $watermark_text = 'PREVIEW') {
 		$this->initPage();
 		$this->design->decoratePdf($this->pdf, $this->data);
 		$this->watermark($watermark_text);
-		$this->pdf->Output(NULL, 'I');
+		$this->pdf->Output($name, $dest);
 
 	}
 
@@ -78,16 +78,7 @@ class Printie {
 
 	public function spreadCoordinates($distance) {
 		// $format = [w, h]
-		$format = $this->design->getFormat();
-		if (!is_array($format)) {
-			$format = \TCPDF_STATIC::getPageSizeFromFormat($this->design->getFormat());
-			// Points to mm.
-			$format[0] *= 2.834;
-			$format[1] *= 2.834;
-		}
-		if ($this->design->getOrientation() == 'L') {
-			$format = array_reverse($format);
-		}
+		$format = array($this->pdf->getPageWidth(), $this->pdf->getPageHeight());
 
 		$count = $dist = array();
 		foreach (range(0, 1) as $dim) {

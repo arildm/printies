@@ -36,7 +36,7 @@ abstract class Design {
 	}
 
 	/**
-	 * @param \FPDI $pdf
+	 * @param \TCPDF $pdf
 	 * @param array $data
 	 */
 	public abstract function decoratePdf($pdf, $data);
