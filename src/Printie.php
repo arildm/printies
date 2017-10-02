@@ -32,7 +32,9 @@ class Printie {
 	public function preview($name = NULL, $dest = 'I', $watermark_text = 'PREVIEW') {
 		$this->initPage();
 		$this->design->decoratePdf($this->pdf, $this->data);
-		$this->watermark($watermark_text);
+		if ($watermark_text) {
+			$this->watermark($watermark_text);
+		}
 		$this->pdf->Output($name, $dest);
 
 	}
