@@ -69,7 +69,7 @@ class Printie {
 	protected function watermark($watermark_text) {
 		$this->pdf->setPage(1);
 		$this->pdf->SetTextColor( 150, 150, 150 );
-		$this->pdf->SetFont( 'helvetica', '', 24 );
+		$this->pdf->SetFontSize( 34 );
 
 		list($dist, $coordinates) = $this->spreadCoordinates(60);
 		foreach ($coordinates as $coordinate) {
