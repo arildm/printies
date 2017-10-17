@@ -31,7 +31,7 @@ class Printie {
 
 	public function preview($name = NULL, $dest = 'I', $watermark_text = 'PREVIEW') {
 		$this->initPage();
-		$this->design->decoratePdf($this->pdf, $this->data);
+		$this->design->decoratePdf($this->pdf, $this->data, TRUE);
 		if ($watermark_text) {
 			$this->watermark($watermark_text);
 		}
@@ -41,7 +41,7 @@ class Printie {
 
 	public function generate($filename) {
 		$this->initPage();
-		$this->design->decoratePdf($this->pdf, $this->data);
+		$this->design->decoratePdf($this->pdf, $this->data, FALSE);
 		$this->pdf->Output($filename, 'F');
 	}
 

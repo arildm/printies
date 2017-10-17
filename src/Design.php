@@ -38,7 +38,8 @@ abstract class Design {
 	/**
 	 * @param \TCPDF $pdf
 	 * @param array $data
+   * @param bool $draft
 	 */
-	public abstract function decoratePdf($pdf, $data);
+	public abstract function decoratePdf($pdf, $data, $draft = FALSE);
 
 }
