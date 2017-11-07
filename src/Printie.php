@@ -29,11 +29,11 @@ class Printie {
 		$this->data = $data;
 	}
 
-	public function preview($name = NULL, $dest = 'I', $watermark_text = 'PREVIEW') {
+	public function preview($name = NULL, $dest = 'I', $watermark_text = 'PREVIEW', $watermark_distance = 60) {
 		$this->initPage();
 		$this->design->decoratePdf($this->pdf, $this->data, TRUE);
 		if ($watermark_text) {
-			$this->watermark($watermark_text);
+			$this->watermark($watermark_text, $watermark_distance);
 		}
 		$this->pdf->Output($name, $dest);
 
@@ -66,12 +66,12 @@ class Printie {
 		return str_replace('.php', '.pdf', $class_filename);
 	}
 
-	protected function watermark($watermark_text) {
+	protected function watermark($watermark_text, $distance) {
 		$this->pdf->setPage(1);
 		$this->pdf->SetTextColor( 150, 150, 150 );
 		$this->pdf->SetFontSize( 34 );
 
-		list($dist, $coordinates) = $this->spreadCoordinates(60);
+		list($dist, $coordinates) = $this->spreadCoordinates($distance);
 		foreach ($coordinates as $coordinate) {
 			$this->pdf->SetXY( $coordinate[0], $coordinate[1] );
 			$this->pdf->Cell( $dist[0], $dist[1] - 30, $watermark_text, 0, 0, 'C' );
@@ -79,13 +79,16 @@ class Printie {
 	}
 
 	public function spreadCoordinates($distance) {
+		// $distance = [min_dx, min_dy]
+		$distances = is_array($distance) ? $distance : array($distance, $distance);
+
 		// $format = [w, h]
 		$format = array($this->pdf->getPageWidth(), $this->pdf->getPageHeight());
 
 		$count = $dist = array();
 		foreach (range(0, 1) as $dim) {
 			// How many watermarks can we fit?
-			$count[$dim] = intval($format[$dim] / $distance) - 1;
+			$count[$dim] = intval($format[$dim] / $distances[$dim]) - 1;
 			// How far apart should they be?
 			$dist[$dim] = $format[$dim] / $count[$dim];
 		}
